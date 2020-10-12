@@ -10,7 +10,6 @@ def webscraping():
     page = soup(req.text, 'html.parser')
     oil_list = page.find_all('div', {'class': 'sectiondataarea'})
 
-
     oil_name_list = []
     oil_price_list = []
 
