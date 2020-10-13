@@ -8,6 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 venv
+.idea/
 .Python
 env/
 build/
