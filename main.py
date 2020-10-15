@@ -1,11 +1,8 @@
-# This is a sample Python script.
+from webscraping import WebScrapper
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-import webscraping
+#Parameters
+URL = 'https://www.tuaceitedemotor.com/aceite-5w30-long-life-longlife-c102x2453154'
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    webscraping.webscraping()
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if __name__ == "__main__":
+    webscrapper = WebScrapper(url=URL)
+    webscrapper.print_dataframe()
