@@ -18,6 +18,8 @@ class WebScrapper():
 
         self.url = url
         self.oil_name_list = []
+        self.oil_brand_list=[]
+        self.oil_quantity_list=[]
         self.oil_price_list = []
 
 
@@ -31,6 +33,7 @@ class WebScrapper():
 
         req = requests.get(self.url)
         page = soup(req.text, 'html.parser')
+
         return page
 
 
@@ -47,12 +50,22 @@ class WebScrapper():
         oil_list = page.find_all('div', {'class': 'sectiondataarea'})
 
         for i in range(1, len(oil_list)):
-            oil_name = oil_list[i].find('div', {'class': 'PBItemName'}).text
+
+            oil_name = oil_list[i].find('div', {'class': 'PBItemName'}).text.rstrip()
+
+            oil_brand = oil_name.split(' ')[0]
+
+            oil_quantity = oil_name.split(' ')[-1].replace('L','')
+
             oil_price = oil_list[i].find('span', {'class': 'PBSalesPrice'}).text
             oil_price = float(oil_price.replace(' EUR','').replace(',','.'))
+
             self.oil_name_list.append(oil_name)
+            self.oil_brand_list.append(oil_brand)
+            self.oil_quantity_list.append(oil_quantity)
             self.oil_price_list.append(oil_price)
-        return self.oil_name_list, self.oil_price_list
+
+        return self.oil_name_list, self.oil_brand_list, self.oil_quantity_list, self.oil_price_list
 
 
     def lists_to_dataframe(self):
@@ -63,9 +76,10 @@ class WebScrapper():
             df (obj): A dataframe containing all the parsed data.
         """
 
-        oil_name_list, oil_price_list = self.parse()
-        data_tuples = list(zip(oil_name_list, oil_price_list))
-        df = pd.DataFrame(data_tuples, columns=['Name', 'Price'])
+        oil_name_list, oil_brand_list, oil_quantity_list, oil_price_list = self.parse()
+        data_tuples = list(zip(oil_name_list, oil_brand_list, oil_quantity_list, oil_price_list))
+        df = pd.DataFrame(data_tuples, columns=['Name','Brand', 'Quantity Liters', 'Price'])
+
         return df
 
 
@@ -81,7 +95,8 @@ class WebScrapper():
         print(df)
         #df.head(n=5)
 
-    def export_csv(self):
+
+    def export_csv(self) -> object:
         """
         This function export dataframe to csv file
 

@@ -46,4 +46,5 @@ PENDIENTE
 
 
 ## The dataset
-PENDIENTE
+
+The dataset is structured file on csv that contains a list of items extracted from the url. This file content a head with describe the information content in the fields.  
