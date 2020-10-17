@@ -49,6 +49,7 @@ class WebScrapper():
         for i in range(1, len(oil_list)):
             oil_name = oil_list[i].find('div', {'class': 'PBItemName'}).text
             oil_price = oil_list[i].find('span', {'class': 'PBSalesPrice'}).text
+            oil_price = float(oil_price.replace(' EUR','').replace(',','.'))
             self.oil_name_list.append(oil_name)
             self.oil_price_list.append(oil_price)
         return self.oil_name_list, self.oil_price_list
@@ -80,6 +81,15 @@ class WebScrapper():
         print(df)
         #df.head(n=5)
 
+    def export_csv(self):
+        """
+        This function export dataframe to csv file
+
+        Returns:
+            file(obj): A file csv with the data of dataframe(df)
+        """
+
+        self.lists_to_dataframe().to_csv('data.csv', index = False)
 
 ######################################   RUN   ######################################
 
@@ -89,3 +99,4 @@ if __name__ == "__main__":
 
     webscrapper = WebScrapper(url=URL)
     webscrapper.print_dataframe()
+    webscrapper.export_csv()
