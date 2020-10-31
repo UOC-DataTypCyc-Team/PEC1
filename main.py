@@ -6,3 +6,4 @@ URL = 'https://www.tuaceitedemotor.com/aceite-5w30-long-life-longlife-c102x24531
 if __name__ == "__main__":
     webscrapper = WebScrapper(url=URL)
     webscrapper.print_dataframe()
+    webscrapper.export_csv()
