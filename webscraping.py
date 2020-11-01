@@ -60,8 +60,11 @@ class WebScrapper():
             oil_price = float(oil_price.replace(' EUR','').replace(',','.'))
 
             self.oil_name_list.append(oil_name)
+
             self.oil_brand_list.append(oil_brand)
+
             self.oil_quantity_list.append(oil_quantity)
+
             self.oil_price_list.append(oil_price)
 
         return self.oil_name_list, self.oil_brand_list, self.oil_quantity_list, self.oil_price_list
@@ -91,7 +94,7 @@ class WebScrapper():
 
         df = self.lists_to_dataframe()
         print(df)
-        #df.head(n=5)
+        #df.head()
 
     def export_csv(self) -> object:
         """
@@ -111,4 +114,4 @@ if __name__ == "__main__":
 
     webscrapper = WebScrapper(url=URL)
     webscrapper.print_dataframe()
-    #webscrapper.export_csv()
+    webscrapper.export_csv()
