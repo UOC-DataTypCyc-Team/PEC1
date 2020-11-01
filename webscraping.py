@@ -45,8 +45,13 @@ class WebScrapper():
             oil_price_list (lst): A list containing the prices of the different oil products.
         """
 
+        # Function that calls the function get_request() to obtain the web information and is saved in the variable page
         page = self.get_request()
+
+
         oil_list = page.find_all('div', {'class': 'sectiondataarea'})
+
+
 
         for i in range(1, len(oil_list)):
 
