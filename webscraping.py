@@ -35,6 +35,10 @@ class WebScrapper():
         page = soup(req.text, 'html.parser')
         return page
 
+    def print(self):
+        soup = self.get_request()
+        print(soup.prettify)
+
 
     def parse(self):
         """
@@ -118,5 +122,5 @@ if __name__ == "__main__":
     URL = 'https://www.tuaceitedemotor.com/aceite-5w30-long-life-longlife-c102x2453154'
 
     webscrapper = WebScrapper(url=URL)
-    webscrapper.print_dataframe()
-    webscrapper.export_csv()
+    webscrapper.print()
+
