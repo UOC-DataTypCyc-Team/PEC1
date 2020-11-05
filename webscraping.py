@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup as soup
 import requests
 import pandas as pd
+import re
 
 
 class WebScrapper():
@@ -21,24 +22,55 @@ class WebScrapper():
         self.oil_brand_list=[]
         self.oil_quantity_list=[]
         self.oil_price_list = []
+        self.links= []
 
 
-    def get_request(self):
+    def get_request(self, url=None):
         """
         The function to make a GET request to the web server.
 
         Returns:
             page (obj): An object containing the html document.
         """
-
-        req = requests.get(self.url)
+        url = self.url if url is None else url
+        req = requests.get(url)
         page = soup(req.text, 'html.parser')
         return page
 
-    def print(self):
-        soup = self.get_request()
-        print(soup.prettify)
+    # Coge todos los links de una web y los añade a la lista "links" del objeto (self.links)
+    def get_links(self, url=None):
+        soup = self.get_request(url)
+        tags = soup('a')
 
+        for tag in tags:
+            try:
+                semilink = re.findall('^[^h\s].*',tag.get('href', None))
+                link = re.findall('^http.*',tag.get('href', None))
+    
+                semilink = 'https://www.tuaceitedemotor.com/' + semilink[0]
+                if semilink not in self.links:
+                    self.links.append(semilink)
+                    print(semilink)
+                elif link:
+                    link = link[0]
+                    if link not in self.links:
+                        self.links.append(link)
+                        print(link)
+            except: 
+                continue
+
+        print(len(self.links))
+
+    # Limitamos la red a unos cuantos enlaces llamando a "get_links" hasta llegar a ese tamaño
+    def net(self):
+
+        self.get_links()
+        for link in self.links:
+            if len(self.links) <= 150:  
+                self.get_links(link)
+            else:
+                print("Spyder done")
+                break
 
     def parse(self):
         """
@@ -120,7 +152,7 @@ class WebScrapper():
 
 if __name__ == "__main__":
     URL = 'https://www.tuaceitedemotor.com/aceite-5w30-long-life-longlife-c102x2453154'
-
-    webscrapper = WebScrapper(url=URL)
-    webscrapper.print()
+    URL2 = 'https://www.tuaceitedemotor.com/'
+    webscrapper = WebScrapper(url=URL2)
+    webscrapper.net()
 
