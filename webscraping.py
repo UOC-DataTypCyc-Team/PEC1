@@ -75,7 +75,7 @@ class WebScrapper():
             if len(self.links) <= self.num_links:  
                 self.get_links(link)
             else:
-                print('\nThe webcrawler has retrieved {} web-pages successfully!!!'.format(len(self.links)))
+                print('\nThe webcrawler has retrieved {} web-pages successfully!!!'.format(len(self.links)-1))
                 break
 
 
@@ -104,7 +104,7 @@ class WebScrapper():
                 try:
                     oil_name = oil_list[i].find('div', {'class': 'PBItemName'}).text.rstrip()
                     oil_brand = oil_name.split(' ')[0]
-                    oil_quantity = oil_name.split(' ')[-1].replace('L','')
+                    oil_quantity = float(oil_name.split(' ')[-1].replace('L',''))
                     oil_price = oil_list[i].find('span', {'class': 'PBSalesPrice'}).text
                     oil_price = float(oil_price.replace(' EUR','').replace(',','.'))
 
@@ -144,7 +144,8 @@ class WebScrapper():
             None
         """
 
-        df = self.lists_to_dataframe()
+        #df = self.lists_to_dataframe()
+        df = self.data_clean()
         print('\n\n',df.head(100))
         #df.head()
 
@@ -160,15 +161,30 @@ class WebScrapper():
         self.lists_to_dataframe().to_csv('data.csv', index = False)
 
 
+    def data_clean(self):
+        """
+        This function clean data and format
+
+        Returns:
+            df(obj): A dataframe with the cleaning data and format
+
+        """
+        df = self.lists_to_dataframe()
+
+
+
+        return df
+
 ######################################   RUN   ######################################
 
 
 if __name__ == "__main__":
     #URL = 'https://www.tuaceitedemotor.com/aceite-5w30-long-life-longlife-c102x2453154'
     URL2 = 'https://www.tuaceitedemotor.com/'
-    NUM_LINKS = 20
+    NUM_LINKS = 25
 
     webscrapper = WebScrapper(url=URL2, num_links=NUM_LINKS)
     webscrapper.print_dataframe()
+    webscrapper.export_csv()
 
 
