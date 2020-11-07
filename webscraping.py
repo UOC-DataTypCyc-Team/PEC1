@@ -177,16 +177,17 @@ class WebScrapper():
 
     def data_calculation(self):
         """
-        This function creates a new attribute from the "Price (€)" and "Quantity (Liters)" attributes.
+        This function creates a new attribute from the "Price (€)" and "Quantity (Liters)" attributes and another one with the current day time.
 
         Returns:
             df (obj): A dataframe with the new attribute "Price by Liter (€)".
         """
-        # We add the new column just before the column with the link where we found the product
+        # We add the new columns just before the column with the link where we found the product
         df = self.lists_to_dataframe()
         idx = len(df.columns) - 1
         price_per_liter = df["Price (€)"] / df["Quantity (Liters)"]
         df.insert(loc=idx, column="Price by Liter (€)", value=price_per_liter)
+        idx += 1
         datetime = pd.to_datetime('today')
         df.insert(loc=idx, column="Datetime", value=datetime)
 
