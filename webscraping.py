@@ -145,7 +145,7 @@ class WebScrapper():
         """
 
         #df = self.lists_to_dataframe()
-        df = self.data_clean()
+        df = self.data_calcuation()
         print('\n\n',df.head(100))
         #df.head()
 
@@ -158,10 +158,10 @@ class WebScrapper():
             file(obj): A file csv with the data of dataframe(df)
         """
 
-        self.lists_to_dataframe().to_csv('data.csv', index = False)
+        self.data_calcuation().to_csv('data.csv', index = False)
 
 
-    def data_clean(self):
+    def data_calcuation(self):
         """
         This function clean data and format
 
@@ -170,9 +170,7 @@ class WebScrapper():
 
         """
         df = self.lists_to_dataframe()
-
-
-
+        df["Price by Liter"] = df["Price"] / df["Quantity Liters"]
         return df
 
 ######################################   RUN   ######################################
