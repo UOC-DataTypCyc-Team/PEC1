@@ -32,13 +32,21 @@ Now, in order to run this package we simply need to run the main.py file with th
 python3 main.py
 ```
 
-Now, the main.py file has some options based on preferences:
-We can assign different variables to the parameters <X, X1, X2, X3>
-based on the output that we want to be displayed on the terminal. The output will be the result of one or more data pre-processing steps,
-that will be initialized on demand at execution time, with the use of flags.
 
 ### Use of flags:
-PENDIENTE
+With can use flags to control the important parameters of the web-crawler, such as the number of links to retrieve or the starter url
+at execution time, without changing the code, which is pretty convenient:
+
+We might run:\
+```python3 main.py --url https://www.tuaceitedemotor.com```\
+```python3 main.py -u https://www.tuaceitedemotor.com```(simplified flag)
+
+Or:\
+```python3 main.py --num_links 10```\
+```python3 main.py -n 10```(simplified flag)
+
+We might even run the two of them simultaneously:\
+```python3 main.py -u https://www.tuaceitedemotor.com -n 10```
 
 
 ## Structure of the repository
