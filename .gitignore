@@ -84,6 +84,5 @@ __pycache__
 *.pyo
 *pyo
 
-# file
-
+# Ignore .csv files
 #*.csv
