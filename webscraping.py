@@ -187,6 +187,8 @@ class WebScrapper():
         idx = len(df.columns) - 1
         price_per_liter = df["Price (€)"] / df["Quantity (Liters)"]
         df.insert(loc=idx, column="Price by Liter (€)", value=price_per_liter)
+        datetime = pd.to_datetime('today')
+        df.insert(loc=idx, column="Datetime", value=datetime)
 
         return df
 
