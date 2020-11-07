@@ -23,10 +23,11 @@ class WebScrapper():
         self.url = url
         self.num_links = num_links
         self.oil_name_list = []
-        self.oil_brand_list=[]
-        self.oil_quantity_list=[]
+        self.oil_brand_list = []
+        self.oil_quantity_list = []
         self.oil_price_list = []
-        self.links= []
+        self.links = []
+        self.link2product_list = []
 
 
     def get_request(self, url=None):
@@ -129,11 +130,13 @@ class WebScrapper():
                     self.oil_brand_list.append(oil_brand)
                     self.oil_quantity_list.append(oil_quantity)
                     self.oil_price_list.append(oil_price)
+                    self.link2product_list.append(link)
 
                 except:
                     continue
 
-        return self.oil_name_list, self.oil_brand_list, self.oil_quantity_list, self.oil_price_list
+        return self.oil_name_list, self.oil_brand_list, self.oil_quantity_list, self.oil_price_list, self.link2product_list
+
 
 
     def lists_to_dataframe(self):
@@ -143,9 +146,9 @@ class WebScrapper():
         Returns:
             df (obj): A dataframe containing all the attributes (columns) and registers (rows) with the parsed data.
         """
-        oil_name_list, oil_brand_list, oil_quantity_list, oil_price_list = self.parse()
-        data_tuples = list(zip(oil_name_list, oil_brand_list, oil_quantity_list, oil_price_list))
-        df = pd.DataFrame(data_tuples, columns=['Name','Brand', 'Quantity (Liters)', 'Price (€)'])
+        oil_name_list, oil_brand_list, oil_quantity_list, oil_price_list, link2product_list = self.parse()
+        data_tuples = list(zip(oil_name_list, oil_brand_list, oil_quantity_list, oil_price_list, link2product_list))
+        df = pd.DataFrame(data_tuples, columns=['Name','Brand', 'Quantity (Liters)', 'Price (€)', 'Found in link (url)'])
 
         return df
 
@@ -179,8 +182,12 @@ class WebScrapper():
         Returns:
             df (obj): A dataframe with the new attribute "Price by Liter (€)".
         """
+        # We add the new column just before the column with the link where we found the product
         df = self.lists_to_dataframe()
-        df["Price by Liter (€)"] = df["Price (€)"] / df["Quantity (Liters)"]
+        idx = len(df.columns) - 1
+        price_per_liter = df["Price (€)"] / df["Quantity (Liters)"]
+        df.insert(loc=idx, column="Price by Liter (€)", value=price_per_liter)
+
         return df
 
 
