@@ -50,7 +50,11 @@ We might even run the two of them simultaneously:\
 
 
 ## Structure of the repository
-PENDIENTE
+The package consists of two core files: "webscrapping.py" and "main.py", which instantiate and execute the WebScrapper class that parses the webcontent and generates a data.csv file.
+
+The data folder contains the data.csv generated file along with a screenshot of the dataframe at acquisition time.
+
+Finally there is the "requirements.txt" file previously mentioned to set up a virtual environment.
 
 
 ## The dataset
