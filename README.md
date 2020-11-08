@@ -34,16 +34,18 @@ python3 main.py
 
 
 ### Use of flags:
-With can use flags to control the important parameters of the web-crawler, such as the number of links to retrieve or the starter url
+We can use flags to control the important parameters of the web-crawler, such as the number of links to retrieve or the starter url
 at execution time, without changing the code, which is pretty convenient:
 
 We might run:\
-```python3 main.py --url https://www.tuaceitedemotor.com```\
-```python3 main.py -u https://www.tuaceitedemotor.com```(simplified flag)
+```python3 main.py --url https://www.tuaceitedemotor.com```
+
+```python3 main.py -u https://www.tuaceitedemotor.com```
 
 Or:\
-```python3 main.py --num_links 10```\
-```python3 main.py -n 10```(simplified flag)
+```python3 main.py --num_links 10```
+
+```python3 main.py -n 10```
 
 We might even run the two of them simultaneously:\
 ```python3 main.py -u https://www.tuaceitedemotor.com -n 10```
